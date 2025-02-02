@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech Insights - Explore the Future</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Tech Insights</h1>
+      <p>Your source for the latest in technology and innovation.</p>
+      <!-- Search Bar -->
+      <form id="searchForm">
+        <input type="text" id="searchInput" placeholder="Search articles...">
+        <button type="submit">Search</button>
+      </form>
+    </div>
+  </header>
+
+  <main class="container">
+    <section>
+      <h2>Featured Articles</h2>
+      <div class="article">
+        <h3>Artificial Intelligence in 2024</h3>
+        <p>Discover how AI is transforming industries and what the future holds.</p>
+      </div>
+      <div class="article">
+        <h3>Cybersecurity Trends to Watch</h3>
+        <p>Learn about the latest threats and how to protect your business.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Feedback Form -->
+  <footer>
+    <div class="container">
+      <h2>Leave Feedback</h2>
+      <form id="feedbackForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" placeholder="Your name" required>
+        
+        <label for="comment">Comment:</label>
+        <textarea id="comment" placeholder="Your feedback..." required></textarea>
+        
+        <button type="submit">Submit</button>
+      </form>
+
+      <!-- Feedback Display -->
+      <div id="feedbackDisplay">
+        <h3>Recent Feedback</h3>
+        <div class="feedback-item">No feedback yet.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Search Bar Logic
+    document.getElementById('searchForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const query = document.getElementById('searchInput').value;
+
+      // Display search results (vulnerable to reflected XSS)
+      const searchResults = document.createElement('div');
+      searchResults.innerHTML = `You searched for: ${query}`;
+      document.querySelector('main').appendChild(searchResults);
+    });
+
+    // Feedback Form Logic
+    const feedbackList = [];
+    document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const comment = document.getElementById('comment').value;
+      feedbackList.push({ name, comment });
+
+      // Display feedback (vulnerable to stored XSS)
+      const feedbackDisplay = document.getElementById('feedbackDisplay');
+      feedbackDisplay.innerHTML = `
+        <h3>Recent Feedback</h3>
+        ${feedbackList.map(f => `
+          <div class="feedback-item">
+            <strong>${f.name}:</strong> ${f.comment}
+          </div>
+        `).join('')}
+      `;
+    });
+  </script>
+</body>
+</html>
