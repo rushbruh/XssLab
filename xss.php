@@ -1,6 +1,6 @@
 <?php
-if (isset($_GET['name'])) {
-    $name = $_GET['name'];  // No sanitization = Vulnerable to XSS
+if (isset($_GET['input'])) {
+    $name = $_GET['input'];  // No sanitization = Vulnerable to XSS
 } else {
     $name = "Guest";
 }
